@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Flight {
+  id          String   @id @default(cuid())
+  type        String   // "departure" or "return"
+  date        DateTime
+  time        String
+  flightNumber String
+  ticketUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Accommodation {
+  id          String   @id @default(cuid())
+  name        String
+  url         String
+  advantages  String[]
+  pricePerNight Float
+  totalPrice  Float
+  addedBy     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Discovery {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  url         String
+  category    String
+  addedBy     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Tip {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  category    String
+  addedBy     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Todo {
+  id          String   @id @default(cuid())
+  title       String
+  completed   Boolean  @default(false)
+  assignedTo  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+} 
