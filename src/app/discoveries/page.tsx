@@ -1,5 +1,3 @@
-import DiscoveriesContent from './components/DiscoveriesContent';
-
 export default function DiscoveriesPage() {
   return (
     <div className="container mx-auto">
@@ -19,7 +17,7 @@ export default function DiscoveriesPage() {
         
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-2">Jardins de Tivoli</h2>
-          <p className="mb-4">L'un des plus anciens parcs d'attractions au monde, fondé en 1843.</p>
+          <p className="mb-4">L&apos;un des plus anciens parcs d&apos;attractions au monde, fondé en 1843.</p>
           <p className="text-sm text-gray-500">Catégorie: Loisirs</p>
           <div className="mt-4">
             <a href="https://www.tivoli.dk/en/" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
@@ -30,7 +28,7 @@ export default function DiscoveriesPage() {
         
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-2">La Petite Sirène</h2>
-          <p className="mb-4">L'emblème de Copenhague, cette statue de bronze représente l'héroïne du conte d'Andersen.</p>
+          <p className="mb-4">L&apos;emblème de Copenhague, cette statue de bronze représente l&apos;héroïne du conte d&apos;Andersen.</p>
           <p className="text-sm text-gray-500">Catégorie: Monuments</p>
           <div className="mt-4">
             <a href="https://www.visitcopenhagen.com/copenhagen/planning/little-mermaid-gdk586951" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">

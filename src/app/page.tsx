@@ -8,7 +8,7 @@ export default function Home() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md animate-fade-in">
           <h2 className="text-xl font-semibold mb-4">À propos du voyage</h2>
-          <p className="mb-4">Bienvenue sur notre plateforme d'organisation pour notre voyage à Copenhague en août 2025!</p>
+          <p className="mb-4">Bienvenue sur notre plateforme d&apos;organisation pour notre voyage à Copenhague en août 2025!</p>
           <p>Ce site nous permettra de centraliser toutes les informations importantes concernant notre séjour.</p>
         </div>
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md animate-fade-in">

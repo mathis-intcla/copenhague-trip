@@ -1,5 +1,3 @@
-import FlightsContent from './components/FlightsContent';
-
 export default function FlightsPage() {
   return (
     <div className="container mx-auto">
