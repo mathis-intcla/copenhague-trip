@@ -1,3 +1,5 @@
+'use client';
+
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { CalendarIcon, UserGroupIcon, MapPinIcon } from "@heroicons/react/24/outline";
