@@ -90,7 +90,7 @@ export default function DiscoveriesContent() {
             </div>
             <div className="mt-4">
               <p className="text-gray-600 dark:text-gray-400">
-                Restaurant étoilé Michelin, connu pour sa cuisine nordique innovante. Réservation recommandée plusieurs mois à l'avance.
+                Restaurant étoilé Michelin, connu pour sa cuisine nordique innovante. Réservation recommandée plusieurs mois à l&apos;avance.
               </p>
             </div>
             <div className="mt-4 flex justify-end">
@@ -123,7 +123,7 @@ export default function DiscoveriesContent() {
             </div>
             <div className="mt-4">
               <p className="text-gray-600 dark:text-gray-400">
-                Découvrez Copenhague depuis l'eau avec une croisière guidée sur les canaux historiques. Vue imprenable sur les monuments.
+                Découvrez Copenhague depuis l&apos;eau avec une croisière guidée sur les canaux historiques. Vue imprenable sur les monuments.
               </p>
             </div>
             <div className="mt-4 flex justify-end">

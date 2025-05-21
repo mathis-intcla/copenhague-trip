@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";

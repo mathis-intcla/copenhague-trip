@@ -1,18 +1,12 @@
 'use client';
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { CalendarIcon, UserGroupIcon, MapPinIcon } from "@heroicons/react/24/outline";
 
 export default function HomeContent() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto"
-      >
+      <div className="max-w-4xl mx-auto animate-fade-in">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
           Notre Voyage à Copenhague
         </h1>
@@ -35,7 +29,7 @@ export default function HomeContent() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Link href="/flights" className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
             <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Vols</h2>
-            <p className="text-gray-600 dark:text-gray-400">Gérez vos horaires et billets d'avion</p>
+            <p className="text-gray-600 dark:text-gray-400">Gérez vos horaires et billets d&apos;avion</p>
           </Link>
 
           <Link href="/accommodation" className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
@@ -58,7 +52,7 @@ export default function HomeContent() {
             <p className="text-gray-600 dark:text-gray-400">Liste collaborative des préparatifs</p>
           </Link>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 } 
