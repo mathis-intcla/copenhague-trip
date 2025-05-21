@@ -20,7 +20,9 @@ jobs:
         
       - name: Build
         run: npm run build
-        
+        env:
+          NODE_ENV: production
+
       - name: Prepare deployment artifacts
         run: |
           mkdir deploy_dist
