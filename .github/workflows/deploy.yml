@@ -26,6 +26,7 @@ jobs:
           mkdir deploy_dist
           cp -r .next/standalone/* deploy_dist/
           if [ -d "public" ]; then
+            mkdir -p deploy_dist/public
             cp -r public/* deploy_dist/public/
           fi
 
