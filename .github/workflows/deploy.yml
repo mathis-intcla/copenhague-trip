@@ -21,11 +21,17 @@ jobs:
       - name: Build
         run: npm run build
         
+      - name: Prepare deployment artifacts
+        run: |
+          mkdir deploy_dist
+          cp -r .next/standalone/* deploy_dist/
+
       - name: Deploy to Infomaniak
         uses: SamKirkland/FTP-Deploy-Action@4.2.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
-          server-dir: ${{ secrets.FTP_SERVER_DIR }} 
+          local-dir: ./deploy_dist/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          dangerous-clean-slate: true 
