@@ -11,21 +11,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      # Optionnel : Supprimer node_modules et .next locaux pour ne pas les envoyer
-      # si l'action FTP ne les exclut pas par défaut (ce qui est souvent le cas pour node_modules via .ftpignore ou des options)
-      - name: Clean up before deploy (optional)
+      # Installation des dépendances et build statique
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Express
+        run: npm install --save express
+        
+      - name: Build static files
+        run: npm run build
+      
+      # Préparer les fichiers à déployer
+      - name: Prepare files for deployment
         run: |
-          rm -rf .next
-          rm -rf node_modules 
-          # deploy_dist n'existera plus, donc pas besoin de le supprimer ici
-
-      - name: Deploy Source to Infomaniak
+          mkdir -p deploy
+          cp -r out/* deploy/
+          cp server.js deploy/
+          cp package.json deploy/
+          cp package-lock.json deploy/
+          
+      # Déployer sur Infomaniak
+      - name: Deploy to Infomaniak
         uses: SamKirkland/FTP-Deploy-Action@4.2.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./ # Déploie tout le répertoire courant (code source)
+          local-dir: ./deploy/ # Déploie les fichiers préparés
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
           dangerous-clean-slate: true # Nettoie le serveur avant de copier les sources
           # Vous pourriez vouloir exclure .git, .github, etc.
