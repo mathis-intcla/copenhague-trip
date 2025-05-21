@@ -14,7 +14,7 @@ export default function HomeContent() {
         className="max-w-4xl mx-auto"
       >
         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-          Voyage à Copenhague
+          Notre Voyage à Copenhague
         </h1>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
