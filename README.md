@@ -1,87 +1,36 @@
-# Voyage à Copenhague 2025
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Application web collaborative pour organiser un voyage à Copenhague du 22 au 26 août 2025.
+## Getting Started
 
-## Fonctionnalités
+First, run the development server:
 
-- 📅 Gestion des vols (horaires, billets)
-- 🏠 Propositions et votes pour les logements
-- 🔍 Partage de découvertes et inspirations
-- 💡 Conseils pratiques pour le voyage
-- ✅ To-do list collaborative
-- 🌓 Mode sombre/clair
-
-## Technologies Utilisées
-
-- Next.js 14
-- TypeScript
-- Tailwind CSS
-- Prisma (PostgreSQL)
-- Framer Motion
-- Heroicons
-
-## Prérequis
-
-- Node.js 18+
-- PostgreSQL
-- npm ou yarn
-
-## Installation
-
-1. Cloner le repository :
-```bash
-git clone [URL_DU_REPO]
-cd copenhague-trip
-```
-
-2. Installer les dépendances :
-```bash
-npm install
-# ou
-yarn install
-```
-
-3. Configurer la base de données :
-- Créer une base de données PostgreSQL
-- Copier le fichier `.env.example` vers `.env`
-- Mettre à jour les variables d'environnement dans `.env`
-
-4. Initialiser la base de données :
-```bash
-npx prisma migrate dev
-```
-
-5. Lancer l'application en mode développement :
 ```bash
 npm run dev
-# ou
+# or
 yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-L'application sera accessible à l'adresse [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Structure du Projet
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```
-src/
-├── app/                    # Pages de l'application
-│   ├── flights/           # Gestion des vols
-│   ├── accommodation/     # Gestion des logements
-│   ├── discoveries/       # Découvertes et inspirations
-│   ├── tips/             # Conseils pratiques
-│   └── todo/             # To-do list collaborative
-├── components/            # Composants réutilisables
-├── lib/                   # Utilitaires et configurations
-└── styles/               # Styles globaux
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Contribution
+## Learn More
 
-1. Créer une branche pour votre fonctionnalité
-2. Commiter vos changements
-3. Pousser vers la branche
-4. Créer une Pull Request
+To learn more about Next.js, take a look at the following resources:
 
-## Licence
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-MIT 
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
