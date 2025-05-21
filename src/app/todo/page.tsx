@@ -1,5 +1,3 @@
-import TodoContent from './components/TodoContent';
-
 export default function TodoPage() {
   return (
     <div className="container mx-auto">
