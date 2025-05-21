@@ -1,17 +1,11 @@
 'use client';
 
-import { motion } from "framer-motion";
 import { PlusIcon, LinkIcon } from "@heroicons/react/24/outline";
 
 export default function DiscoveriesContent() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto"
-      >
+      <div className="max-w-4xl mx-auto animate-fade-in">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Découvertes & Inspirations
@@ -145,7 +139,7 @@ export default function DiscoveriesContent() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 } 
