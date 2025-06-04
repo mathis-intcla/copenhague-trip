@@ -27,6 +27,11 @@ export default function RootLayout({
               <Link href="/discoveries" className="hover:underline">Découvertes</Link>
               <Link href="/tips" className="hover:underline">Conseils</Link>
               <Link href="/todo" className="hover:underline">Todo</Link>
+              <Link href="/map" className="hover:underline">Carte</Link>
+              <Link href="/packing-list" className="hover:underline">Bagages</Link>
+              <Link href="/payments" className="hover:underline">Paiements</Link>
+              <Link href="/weather" className="hover:underline">Météo</Link>
+              <Link href="/news" className="hover:underline">Actualités</Link>
             </div>
           </div>
         </nav>
