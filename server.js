@@ -11,7 +11,7 @@ app.prepare().then(() => {
   const server = express();
 
   // Gérer toutes les requêtes avec Next.js
-  server.use((req, res) => {
+  server.all(/.*/, (req, res) => {
     return handle(req, res);
   });
 
