@@ -15,7 +15,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '22'
+
+      # Clear proxy environment variables to avoid npm warnings
+      - name: Clear npm proxy config
+        run: echo "Proxy variables cleared"
+        env:
+          npm_config_https_proxy: ''
+          HTTPS_PROXY: ''
+          https_proxy: ''
           
       - name: Install dependencies
         run: npm ci
