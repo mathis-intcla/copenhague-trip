@@ -1,18 +1,22 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
-const path = require('path');
+const next = require('next');
 
-const app = express();
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 const PORT = process.env.PORT || 3000;
 
-// Servir les fichiers statiques depuis le dossier 'out'
-app.use(express.static(path.join(__dirname, 'out')));
+app.prepare().then(() => {
+  const server = express();
 
-// Pour toutes les autres routes, servir index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'out', 'index.html'));
-});
+  // Gérer toutes les requêtes avec Next.js
+  server.all('*', (req, res) => {
+    return handle(req, res);
+  });
 
-app.listen(PORT, () => {
-  console.log(`Serveur démarré sur le port ${PORT}`);
+  server.listen(PORT, (err) => {
+    if (err) throw err;
+    console.log(`> Serveur démarré sur le port ${PORT}`);
+  });
 });
