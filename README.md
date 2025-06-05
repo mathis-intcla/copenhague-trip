@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-> **Note**: The app is tested with Node.js 20.x. Using newer versions such as Node 22 may lead to build errors.
+> **Note**: The app is compatible with Node.js 22 and later.
 
 ## Getting Started
 
