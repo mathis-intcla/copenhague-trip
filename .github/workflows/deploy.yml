@@ -11,26 +11,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      # Installation des dépendances et build statique
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
-      
-        
-      - name: Build static files
-        run: npm run build
+      - name: Install dependencies and build
+        run: npm ci && npm run build
       
       # Préparer les fichiers à déployer
       - name: Prepare files for deployment
         run: |
           mkdir -p deploy
-          cp -r out deploy/
-          cp server.js package.json package-lock.json deploy/
+          cp -r .next public deploy/
+          cp package.json package-lock.json deploy/
+          if [ -f server.js ]; then cp server.js deploy/; fi
           
       # Déployer sur Infomaniak
       - name: Deploy to Infomaniak
@@ -41,7 +37,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./deploy/
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          dangerous-clean-slate: true # Nettoie le serveur avant de copier les sources
+          dangerous-clean-slate: false
           # Vous pourriez vouloir exclure .git, .github, etc.
           # L'action a une option `exclude`
           exclude: |
