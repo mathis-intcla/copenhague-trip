@@ -26,7 +26,6 @@ jobs:
           HTTP_PROXY: ''
           http_proxy: ''
           HTTPS_PROXY: ''
-          https_proxy: ''
           
       - name: Install dependencies
         run: npm ci
