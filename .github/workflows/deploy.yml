@@ -19,9 +19,11 @@ jobs:
 
       # Les étapes de build sont omises pour transférer le projet tel quel
           
+      # Les étapes de build sont omises pour transférer le projet tel quel
+          
       # Déployer sur Infomaniak
       - name: Deploy to Infomaniak
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
