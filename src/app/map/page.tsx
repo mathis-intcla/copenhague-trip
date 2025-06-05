@@ -28,19 +28,35 @@ export default function MapPage() {
   if (!isClient) return null
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Carte des lieux</h1>
-      <MapContainer center={[55.6761, 12.5683]} zoom={13} style={{ height: '500px', width: '100%' }}>
-        <TileLayer
-          attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    <div className="relative w-full min-h-[60vh] flex flex-col items-center justify-center">
+      {/* Fond illustré */}
+      <div className="absolute inset-0 w-full h-[320px] md:h-[400px] overflow-hidden rounded-3xl shadow-apple">
+        <img
+          src="/map-copenhagen.jpg"
+          alt="Carte Copenhague"
+          className="w-full h-full object-cover object-center scale-105"
+          style={{ filter: 'brightness(0.85) blur(2px)' }}
         />
-        {places.map((p, idx) => (
-          <Marker position={p.position} key={idx}>
-            <Popup>{p.name}</Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/30 to-transparent dark:from-gray-900/80 dark:via-gray-900/30 dark:to-transparent backdrop-blur-xl rounded-3xl" />
+      </div>
+      <div className="relative z-10 w-full max-w-2xl mx-auto pt-16 pb-8 animate-fade-in">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-8 text-center drop-shadow-lg">
+          Carte des lieux
+        </h1>
+        <div className="glass dark:glass-dark rounded-3xl shadow-apple p-4 animate-fade-in">
+          <MapContainer center={[55.6761, 12.5683]} zoom={13} style={{ height: '400px', width: '100%', borderRadius: '1.5rem', overflow: 'hidden' }}>
+            <TileLayer
+              attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            {places.map((p, idx) => (
+              <Marker position={p.position} key={idx}>
+                <Popup>{p.name}</Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+        </div>
+      </div>
     </div>
   )
 }

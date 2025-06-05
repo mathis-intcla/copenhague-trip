@@ -5,54 +5,59 @@ import { CalendarIcon, UserGroupIcon, MapPinIcon } from "@heroicons/react/24/out
 
 export default function HomeContent() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto animate-fade-in">
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+    <div className="relative w-full min-h-[60vh] flex flex-col items-center justify-center">
+      {/* Hero image avec effet de flou et overlay glassmorphism */}
+      <div className="absolute inset-0 w-full h-[340px] md:h-[420px] overflow-hidden rounded-3xl shadow-apple">
+        <img
+          src="/hero-copenhagen.jpg"
+          alt="Copenhague"
+          className="w-full h-full object-cover object-center scale-105"
+          style={{ filter: 'brightness(0.85) blur(2px)' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/30 to-transparent dark:from-gray-900/70 dark:via-gray-900/30 dark:to-transparent backdrop-blur-xl rounded-3xl" />
+      </div>
+      <div className="relative z-10 flex flex-col items-center justify-center pt-16 pb-8 animate-fade-in">
+        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white drop-shadow-lg text-center mb-4">
           Notre Voyage à Copenhague
         </h1>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-            <CalendarIcon className="h-6 w-6" />
-            <span>22 - 26 Août 2025</span>
-          </div>
-          <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-            <MapPinIcon className="h-6 w-6" />
-            <span>Copenhague, Danemark</span>
-          </div>
-          <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-            <UserGroupIcon className="h-6 w-6" />
-            <span>Chaima, Erton, Agathe, Mathis</span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Link href="/flights" className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
-            <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Vols</h2>
-            <p className="text-gray-600 dark:text-gray-400">Gérez vos horaires et billets d&apos;avion</p>
-          </Link>
-
-          <Link href="/accommodation" className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
-            <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Logements</h2>
-            <p className="text-gray-600 dark:text-gray-400">Proposez et votez pour vos hébergements préférés</p>
-          </Link>
-
-          <Link href="/discoveries" className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
-            <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Découvertes</h2>
-            <p className="text-gray-600 dark:text-gray-400">Partagez vos inspirations et découvertes</p>
-          </Link>
-
-          <Link href="/tips" className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
-            <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Conseils</h2>
-            <p className="text-gray-600 dark:text-gray-400">Informations pratiques pour le voyage</p>
-          </Link>
-
-          <Link href="/todo" className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
-            <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">To-do List</h2>
-            <p className="text-gray-600 dark:text-gray-400">Liste collaborative des préparatifs</p>
-          </Link>
+        <div className="flex flex-col md:flex-row gap-4 md:gap-8 mb-6">
+          <span className="px-4 py-2 rounded-full bg-white/70 dark:bg-gray-800/70 shadow-apple text-gray-800 dark:text-gray-100 text-base font-medium ios-hover smooth">
+            22 - 26 Août 2025
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/70 dark:bg-gray-800/70 shadow-apple text-gray-800 dark:text-gray-100 text-base font-medium ios-hover smooth">
+            Copenhague, Danemark
+          </span>
+          <span className="px-4 py-2 rounded-full bg-white/70 dark:bg-gray-800/70 shadow-apple text-gray-800 dark:text-gray-100 text-base font-medium ios-hover smooth">
+            Chaima, Erton, Agathe, Mathis
+          </span>
         </div>
       </div>
+      {/* Cartes d'accès rapide */}
+      <div className="relative z-10 w-full max-w-3xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-[-60px] px-2">
+        <QuickLink href="/flights" title="Vols" desc="Gérez vos horaires et billets d'avion" />
+        <QuickLink href="/accommodation" title="Logements" desc="Proposez et votez pour vos hébergements préférés" />
+        <QuickLink href="/discoveries" title="Découvertes" desc="Partagez vos inspirations et découvertes" />
+        <QuickLink href="/tips" title="Conseils" desc="Informations pratiques pour le voyage" />
+        <QuickLink href="/todo" title="To-do List" desc="Liste collaborative des préparatifs" />
+        <QuickLink href="/packing-list" title="Bagages" desc="Checklist interactive pour ne rien oublier" />
+      </div>
     </div>
+  );
+}
+
+function QuickLink({ href, title, desc }: { href: string; title: string; desc: string }) {
+  return (
+    <Link
+      href={href}
+      className="block glass dark:glass-dark rounded-3xl p-6 shadow-apple hover:scale-[1.03] ios-hover smooth transition-transform min-h-[120px] flex flex-col justify-between"
+    >
+      <h2 className="text-xl font-semibold mb-1 text-gray-900 dark:text-white drop-shadow">
+        {title}
+      </h2>
+      <p className="text-gray-600 dark:text-gray-300 text-sm mb-1 flex-1">
+        {desc}
+      </p>
+      <span className="text-blue-600 dark:text-blue-400 text-xs font-medium mt-2">Accéder →</span>
+    </Link>
   );
 } 
