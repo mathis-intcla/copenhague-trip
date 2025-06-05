@@ -11,7 +11,9 @@ app.prepare().then(() => {
   const server = express();
 
   // Gérer toutes les requêtes avec Next.js
-  server.all('*', (req, res) => {
+  // Use a regex route to avoid Express 5 wildcard bug:
+  // https://git.new/pathToRegexpError
+  server.all(/.*/, (req, res) => {
     return handle(req, res);
   });
 
