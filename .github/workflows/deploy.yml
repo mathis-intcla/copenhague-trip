@@ -1,91 +1,121 @@
-name: Build and Deploy to Infomaniak Node.js Hosting
+name: Build and Deploy to Infomaniak
 
 on:
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Install build dependencies
-        run: |
-          # Restaurer temporairement l'ancien package.json pour le build
-          git show HEAD~1:package.json > package-build.json || echo "Pas d'ancien package.json"
-          if [ -f package-build.json ] && [ -s package-build.json ]; then
-            cp package-build.json package.json
-            npm install
-          else
-            echo "Pas de build dependencies nécessaires"
-          fi
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
 
-      - name: Build Next.js static site
-        run: |
-          if [ -f package-build.json ] && [ -s package-build.json ]; then
-            npm run build
-          else
-            echo "Pas de build possible - utilisation des fichiers existants"
-          fi
+    - name: Restaurer le package.json pour le build
+      run: |
+        echo "# Copie du package-build.json vers package.json pour le build"
+        if [ -f package-build.json ] && [ -s package-build.json ]; then
+          cp package-build.json package.json
+          echo "✅ Package.json configuré pour le build"
+        else
+          echo "❌ Pas de package-build.json disponible"
+          exit 1
+        fi
+
+    - name: Install dependencies and build
+      run: |
+        echo "=== Installation des dépendances ==="
+        npm ci
+        echo "=== Build Next.js ==="
+        npm run build
+        echo "✅ Build terminé"
+
+    - name: Préparation des fichiers de production
+      run: |
+        echo "=== Préparation des fichiers de production ==="
         
-      - name: Prepare production files
-        run: |
-          echo "=== Préparation des fichiers de production ==="
-          
-          # Restaurer le package.json de production
-          git show HEAD:package.json > package.json
-          
-          # Copier les fichiers statiques de out/ vers la racine (si ils existent)
-          if [ -d "out" ]; then
-            cp -r out/* ./
-            echo "✅ Fichiers statiques copiés depuis out/"
-          else
-            echo "⚠️ Pas de dossier out/ - utilisation des fichiers existants"
-          fi
-          
-          # Vérifier les fichiers finaux
-          echo "=== Fichiers qui seront déployés ==="
-          ls -la
-          
-          echo "=== Vérification des fichiers critiques ==="
-          test -f index.html && echo "✅ index.html présent" || echo "❌ index.html manquant"
-          test -f server.js && echo "✅ server.js présent" || echo "❌ server.js manquant"
-          test -f package.json && echo "✅ package.json présent" || echo "❌ package.json manquant"
+        # Restaurer le package.json simple pour la production
+        cat > package.json << 'EOF'
+        {
+          "name": "copenhague-trip-static",
+          "version": "1.0.0",
+          "private": true,
+          "engines": {
+            "node": ">=18"
+          },
+          "scripts": {
+            "start": "node server.js"
+          },
+          "dependencies": {
+            "express": "^4.18.2"
+          }
+        }
+        EOF
+        
+        # Supprimer les anciens lock files
+        rm -f package-lock.json
+        
+        # Vérification des fichiers
+        if [ -d "out" ]; then
+          echo "✅ Dossier out/ trouvé avec les fichiers statiques"
+          ls -la out/
+        else
+          echo "❌ Pas de dossier out/ - le build a échoué"
+          exit 1
+        fi
+        
+        echo "=== Fichiers qui seront déployés ==="
+        ls -la
+        
+        echo "=== Vérification des fichiers critiques ==="
+        if [ -f "out/index.html" ]; then
+          echo "✅ index.html présent"
+        else
+          echo "❌ index.html manquant"
+        fi
+        
+        if [ -f "server.js" ]; then
+          echo "✅ server.js présent"
+        else
+          echo "❌ server.js manquant"
+        fi
+        
+        if [ -f "package.json" ]; then
+          echo "✅ package.json présent"
+        else
+          echo "❌ package.json manquant"
+        fi
 
-      - name: Deploy to Infomaniak
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          dangerous-clean-slate: true
-          exclude: |
-            **/node_modules/**
-            **/src/**
-            **/.git*/**
-            **/.github*/**
-            **/out/**
-            **/*.md
-            **/tailwind.config.ts
-            **/tsconfig.json
-            **/next.config.js
-            **/postcss.config.mjs
-            **/eslint.config.mjs
-            **/.eslintrc.json
-            **/package-build.json
-
-      - name: Deployment Success
-        run: |
-          echo "🎉 Déploiement terminé!"
-          echo "🌐 Site: https://voyage.mathisinternicola.fr"
-          echo "📦 Serveur Node.js + fichiers statiques déployés"
-          echo "🚀 Infomaniak va maintenant pouvoir faire 'npm install && npm start'" 
+    - name: Deploy to Infomaniak
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: 21
+        protocol: ftp
+        exclude: |
+          .git*
+          .git*/**
+          node_modules/**
+          src/**
+          *.md
+          .eslintrc.json
+          eslint.config.mjs
+          next.config.js
+          postcss.config.mjs
+          tailwind.config.ts
+          tsconfig.json
+          .nvmrc
+          .npmrc
+          package-build.json
+                dangerous-clean-slate: true 
