@@ -32,18 +32,27 @@ jobs:
           echo "=== CSS générés ==="
           find out/_next -name "*.css" | head -3
 
-      - name: Deploy with rsync (clean)
-        uses: burnett01/rsync-deployments@6.0.0
+      - name: Deploy static files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          switches: -avzr --delete --exclude='.git*'
-          path: out/
-          remote_path: ${{ secrets.FTP_SERVER_DIR }}
-          remote_host: ${{ secrets.FTP_SERVER }}
-          remote_user: ${{ secrets.FTP_USERNAME }}
-          remote_key: ${{ secrets.DEPLOY_KEY }}
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: out/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          dangerous-clean-slate: true
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*
+            **/.github*/**
+            **/node_modules/**
+            **/src/**
+            **/*.ts
+            **/*.js.map
 
       - name: Deployment Success
         run: |
           echo "🎉 Déploiement statique terminé!"
           echo "🌐 Site: https://voyage.mathisinternicola.fr"
-          echo "📁 Seulement les fichiers statiques ont été déployés" 
+          echo "📁 Seulement les fichiers statiques du dossier out/ ont été déployés" 
