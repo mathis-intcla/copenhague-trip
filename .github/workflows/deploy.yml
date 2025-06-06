@@ -1,44 +1,47 @@
-name: Deploy Source Code to Infomaniak
+name: Build and Deploy to Infomaniak
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  deploy-source:
-    runs-on: [self-hosted, macOS]
+  build-and-deploy:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
 
-      # Les étapes de build sont omises pour transférer le projet tel quel
+      - name: Install dependencies
+        run: npm ci
 
-          
-      # Déployer sur Infomaniak
+      - name: Build Next.js app
+        run: npm run build
+        
+      - name: List build output
+        run: |
+          echo "Contenu du dossier out:"
+          ls -la out/
+          echo "Taille du build:"
+          du -sh out/
+
+      # Déployer le site statique sur Infomaniak
       - name: Deploy to Infomaniak
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
+          local-dir: ./out/
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
-
-          dangerous-clean-slate: false
-          # Vous pourriez vouloir exclure .git, .github, etc.
-          # L'action a une option `exclude`
+          dangerous-clean-slate: true
           exclude: |
             **/.git*
             **/.git*/**
             **/.github*
-            **/.github*/**
-            **/node_modules/** 
-            # Si vous voulez qu'Infomaniak fasse un `npm ci` propre,
-            # ne pas envoyer node_modules est préférable.
-            # Si Infomaniak ne fait pas `npm ci`, alors vous auriez besoin de node_modules. 
+            **/.github*/** 
