@@ -61,7 +61,7 @@ jobs:
         }
         EOF
 
-        # 3. Copier le serveur et le dossier de build DANS le paquet
+        # 3. Copier le serveur et le contenu du dossier de build DANS le paquet
         cp server.js deploy_package/
         cp -r out/* deploy_package/
 
@@ -76,8 +76,6 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         port: 21
         protocol: ftp
-        # --- On déploie UNIQUEMENT le paquet ---
         local-dir: ./deploy_package/
         server-dir: /srv/customer/sites/voyage.mathisinternicola.fr/
-        # ----------------------------------------
         dangerous-clean-slate: true 
