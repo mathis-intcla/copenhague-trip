@@ -1,4 +1,4 @@
-name: Build and Deploy to Infomaniak
+name: Build and Deploy Static Site to Infomaniak
 
 on:
   push:
@@ -20,28 +20,60 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Next.js app
+      - name: Build Next.js static site
         run: npm run build
         
-      - name: List build output
+      - name: Verify build output
         run: |
-          echo "Contenu du dossier out:"
+          echo "=== Contenu du dossier out ==="
           ls -la out/
-          echo "Taille du build:"
+          echo "=== Vérification index.html ==="
+          test -f out/index.html && echo "✅ index.html existe" || echo "❌ index.html manquant"
+          echo "=== Vérification CSS ==="
+          find out/_next -name "*.css" | head -3
+          echo "=== Taille totale ==="
           du -sh out/
 
-      # Déployer le site statique sur Infomaniak
-      - name: Deploy to Infomaniak
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out/
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          dangerous-clean-slate: true
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github*
-            **/.github*/** 
+      - name: Install SFTP client
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy static files via SFTP
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          # Créer un script SFTP pour déployer seulement les fichiers statiques
+          cat << EOF > deploy_script.lftp
+          set ssl:verify-certificate no
+          set ftp:ssl-allow no
+          open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_SERVER
+          
+          # Nettoyer le dossier de destination (sauf certains fichiers)
+          cd $FTP_SERVER_DIR
+          rm -rf _next 2>/dev/null || true
+          rm -f *.html 2>/dev/null || true
+          rm -f *.jpg *.png *.svg 2>/dev/null || true
+          rm -rf accommodation discoveries flights map news packing-list payments tips todo weather 404 2>/dev/null || true
+          
+          # Uploader SEULEMENT le contenu du dossier out
+          lcd out
+          mirror --reverse --delete --verbose ./
+          
+          # Vérifier le déploiement
+          ls -la
+          quit
+          EOF
+          
+          # Exécuter le script SFTP
+          lftp -f deploy_script.lftp
+          
+      - name: Cleanup
+        run: rm -f deploy_script.lftp
+
+      - name: Deployment Success
+        run: |
+          echo "🎉 Déploiement terminé avec succès!"
+          echo "🌐 Site accessible sur: https://voyage.mathisinternicola.fr"
+          echo "📁 Seuls les fichiers statiques ont été déployés" 
