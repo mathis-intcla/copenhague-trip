@@ -6,13 +6,6 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: [
-    'text-blue-500',
-    'line-through',
-    'opacity-60',
-    'text-gray-400',
-    'dark:text-gray-500',
-  ],
   darkMode: "class",
   theme: {
     extend: {
