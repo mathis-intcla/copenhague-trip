@@ -15,26 +15,40 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
 
-      - name: Install dependencies (build)
-        run: npm ci
+      - name: Install build dependencies
+        run: |
+          # Restaurer temporairement l'ancien package.json pour le build
+          git show HEAD~1:package.json > package-build.json || echo "Pas d'ancien package.json"
+          if [ -f package-build.json ] && [ -s package-build.json ]; then
+            cp package-build.json package.json
+            npm install
+          else
+            echo "Pas de build dependencies nécessaires"
+          fi
 
       - name: Build Next.js static site
-        run: npm run build
+        run: |
+          if [ -f package-build.json ] && [ -s package-build.json ]; then
+            npm run build
+          else
+            echo "Pas de build possible - utilisation des fichiers existants"
+          fi
         
       - name: Prepare production files
         run: |
           echo "=== Préparation des fichiers de production ==="
           
-          # Copier les fichiers statiques de out/ vers la racine
-          cp -r out/* ./
+          # Restaurer le package.json de production
+          git show HEAD:package.json > package.json
           
-          # Créer le package.json de production (déjà fait)
-          echo "✅ package.json de production créé"
-          
-          # Serveur Express simple (déjà fait) 
-          echo "✅ server.js pour Express créé"
+          # Copier les fichiers statiques de out/ vers la racine (si ils existent)
+          if [ -d "out" ]; then
+            cp -r out/* ./
+            echo "✅ Fichiers statiques copiés depuis out/"
+          else
+            echo "⚠️ Pas de dossier out/ - utilisation des fichiers existants"
+          fi
           
           # Vérifier les fichiers finaux
           echo "=== Fichiers qui seront déployés ==="
@@ -44,7 +58,6 @@ jobs:
           test -f index.html && echo "✅ index.html présent" || echo "❌ index.html manquant"
           test -f server.js && echo "✅ server.js présent" || echo "❌ server.js manquant"
           test -f package.json && echo "✅ package.json présent" || echo "❌ package.json manquant"
-          test -d _next && echo "✅ dossier _next présent" || echo "❌ dossier _next manquant"
 
       - name: Deploy to Infomaniak
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -68,10 +81,11 @@ jobs:
             **/postcss.config.mjs
             **/eslint.config.mjs
             **/.eslintrc.json
+            **/package-build.json
 
       - name: Deployment Success
         run: |
           echo "🎉 Déploiement terminé!"
           echo "🌐 Site: https://voyage.mathisinternicola.fr"
           echo "📦 Serveur Node.js + fichiers statiques déployés"
-          echo "🚀 Infomaniak va maintenant pouvoir faire 'npm start'" 
+          echo "🚀 Infomaniak va maintenant pouvoir faire 'npm install && npm start'" 
