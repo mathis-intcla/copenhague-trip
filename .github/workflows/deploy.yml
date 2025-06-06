@@ -104,7 +104,7 @@ jobs:
         port: 21
         protocol: ftp
         local-dir: ./out/
-        server-dir: ~/sites/voyage.mathisinternicola.fr/
+        server-dir: /srv/customer/sites/voyage.mathisinternicola.fr/
         exclude: |
           .git*
           .git*/**
