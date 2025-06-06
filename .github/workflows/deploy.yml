@@ -103,6 +103,8 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         port: 21
         protocol: ftp
+        local-dir: ./out/
+        server-dir: ~/sites/voyage.mathisinternicola.fr
         exclude: |
           .git*
           .git*/**
