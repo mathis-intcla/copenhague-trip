@@ -39,19 +39,19 @@ jobs:
         npm run build
         echo "✅ Build terminé"
 
-    - name: Préparation des fichiers de production
+    - name: Préparer le paquet de déploiement
       run: |
-        echo "=== Préparation des fichiers de production ==="
+        echo "=== Création du paquet de déploiement ==="
         
-        # Restaurer le package.json simple pour la production
-        cat > package.json << 'EOF'
+        # 1. Créer le dossier qui sera déployé
+        mkdir deploy_package
+
+        # 2. Créer le package.json de production DANS ce dossier
+        cat > deploy_package/package.json << 'EOF'
         {
-          "name": "copenhague-trip-static",
+          "name": "copenhague-trip-prod",
           "version": "1.0.0",
           "private": true,
-          "engines": {
-            "node": ">=18"
-          },
           "scripts": {
             "start": "node server.js"
           },
@@ -60,40 +60,13 @@ jobs:
           }
         }
         EOF
-        
-        # Supprimer les anciens lock files
-        rm -f package-lock.json
-        
-        # Vérification des fichiers
-        if [ -d "out" ]; then
-          echo "✅ Dossier out/ trouvé avec les fichiers statiques"
-          ls -la out/
-        else
-          echo "❌ Pas de dossier out/ - le build a échoué"
-          exit 1
-        fi
-        
-        echo "=== Fichiers qui seront déployés ==="
-        ls -la
-        
-        echo "=== Vérification des fichiers critiques ==="
-        if [ -f "out/index.html" ]; then
-          echo "✅ index.html présent"
-        else
-          echo "❌ index.html manquant"
-        fi
-        
-        if [ -f "server.js" ]; then
-          echo "✅ server.js présent"
-        else
-          echo "❌ server.js manquant"
-        fi
-        
-        if [ -f "package.json" ]; then
-          echo "✅ package.json présent"
-        else
-          echo "❌ package.json manquant"
-        fi
+
+        # 3. Copier le serveur et le dossier de build DANS le paquet
+        cp server.js deploy_package/
+        cp -r out/* deploy_package/
+
+        echo "✅ Paquet de déploiement prêt dans deploy_package/"
+        ls -la deploy_package/
 
     - name: Deploy to Infomaniak
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -103,21 +76,8 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         port: 21
         protocol: ftp
-        local-dir: ./out/
+        # --- On déploie UNIQUEMENT le paquet ---
+        local-dir: ./deploy_package/
         server-dir: /srv/customer/sites/voyage.mathisinternicola.fr/
-        exclude: |
-          .git*
-          .git*/**
-          node_modules/**
-          src/**
-          *.md
-          .eslintrc.json
-          eslint.config.mjs
-          next.config.js
-          postcss.config.mjs
-          tailwind.config.ts
-          tsconfig.json
-          .nvmrc
-          .npmrc
-          package-build.json
-                dangerous-clean-slate: true 
+        # ----------------------------------------
+        dangerous-clean-slate: true 
