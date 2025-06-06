@@ -1,46 +1,14 @@
 {
-  "name": "copenhague-trip",
-  "version": "0.1.0",
+  "name": "copenhague-trip-static",
+  "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=22"
+    "node": ">=18"
   },
   "scripts": {
-    "build": "next build",
-    "start": "NODE_ENV=production node server.js",
-    "export": "next build",
-    "lint": "eslint ."
+    "start": "node server.js"
   },
   "dependencies": {
-    "@heroicons/react": "^2.2.0",
-    "express": "^5.1.0",
-    "leaflet": "^1.9.4",
-    "next": "^15.3.3",
-    "next-themes": "^0.4.6",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-leaflet": "^5.0.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.8",
-    "@types/node": "^22.15.29",
-    "@types/react": "^19.1.6",
-    "@types/react-dom": "^19.1.6",
-    "@typescript-eslint/eslint-plugin": "^8.33.1",
-    "@typescript-eslint/parser": "^8.33.1",
-    "autoprefixer": "^10.4.21",
-    "eslint": "^9.28.0",
-    "eslint-config-next": "^15.3.3",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "postcss": "^8.5.4",
-    "tailwindcss": "^4.1.8",
-    "typescript": "^5.8.3"
-  },
-  "overrides": {
-    "glob": "^11.0.2",
-    "rimraf": "^6.0.1",
-    "lru-cache": "^10.2.0",
-    "@eslint/config-array": "^0.20.0",
-    "@eslint/object-schema": "^2.1.6"
+    "express": "^4.18.2"
   }
 }

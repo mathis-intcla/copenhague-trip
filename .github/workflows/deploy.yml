@@ -1,4 +1,4 @@
-name: Build and Deploy Static Site to Infomaniak
+name: Build and Deploy to Infomaniak Node.js Hosting
 
 on:
   push:
@@ -17,42 +17,61 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install dependencies (build)
         run: npm ci
 
       - name: Build Next.js static site
         run: npm run build
         
-      - name: Verify build output
+      - name: Prepare production files
         run: |
-          echo "=== Contenu du dossier out ==="
-          ls -la out/
-          echo "=== Fichiers HTML générés ==="
-          find out/ -name "*.html" | head -5
-          echo "=== CSS générés ==="
-          find out/_next -name "*.css" | head -3
+          echo "=== Préparation des fichiers de production ==="
+          
+          # Copier les fichiers statiques de out/ vers la racine
+          cp -r out/* ./
+          
+          # Créer le package.json de production (déjà fait)
+          echo "✅ package.json de production créé"
+          
+          # Serveur Express simple (déjà fait) 
+          echo "✅ server.js pour Express créé"
+          
+          # Vérifier les fichiers finaux
+          echo "=== Fichiers qui seront déployés ==="
+          ls -la
+          
+          echo "=== Vérification des fichiers critiques ==="
+          test -f index.html && echo "✅ index.html présent" || echo "❌ index.html manquant"
+          test -f server.js && echo "✅ server.js présent" || echo "❌ server.js manquant"
+          test -f package.json && echo "✅ package.json présent" || echo "❌ package.json manquant"
+          test -d _next && echo "✅ dossier _next présent" || echo "❌ dossier _next manquant"
 
-      - name: Deploy static files via FTP
+      - name: Deploy to Infomaniak
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: out/
+          local-dir: ./
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
           dangerous-clean-slate: true
           exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github*
-            **/.github*/**
             **/node_modules/**
             **/src/**
-            **/*.ts
-            **/*.js.map
+            **/.git*/**
+            **/.github*/**
+            **/out/**
+            **/*.md
+            **/tailwind.config.ts
+            **/tsconfig.json
+            **/next.config.js
+            **/postcss.config.mjs
+            **/eslint.config.mjs
+            **/.eslintrc.json
 
       - name: Deployment Success
         run: |
-          echo "🎉 Déploiement statique terminé!"
+          echo "🎉 Déploiement terminé!"
           echo "🌐 Site: https://voyage.mathisinternicola.fr"
-          echo "📁 Seulement les fichiers statiques du dossier out/ ont été déployés" 
+          echo "📦 Serveur Node.js + fichiers statiques déployés"
+          echo "🚀 Infomaniak va maintenant pouvoir faire 'npm start'" 

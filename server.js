@@ -1,22 +1,23 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
-const next = require('next');
+const path = require('path');
+const app = express();
+const port = process.env.PORT || 3000;
 
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
-const handle = app.getRequestHandler();
-const PORT = process.env.PORT || 3000;
+// Servir les fichiers statiques depuis le dossier racine
+app.use(express.static('.'));
 
-app.prepare().then(() => {
-  const server = express();
+// Gérer les routes SPA (Single Page Application)
+app.get('*', (req, res) => {
+  // Si c'est une route d'API ou un fichier, ne pas rediriger
+  if (req.url.startsWith('/_next') || req.url.includes('.')) {
+    return res.status(404).send('Not found');
+  }
+  
+  // Pour toutes les autres routes, servir index.html
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
-  // Gérer toutes les requêtes avec Next.js
-  server.all(/.*/, (req, res) => {
-    return handle(req, res);
-  });
-
-  server.listen(PORT, (err) => {
-    if (err) throw err;
-    console.log(`> Serveur démarré sur le port ${PORT}`);
-  });
+app.listen(port, () => {
+  console.log(`🚀 Serveur statique démarré sur le port ${port}`);
+  console.log(`🌐 Site accessible sur http://localhost:${port}`);
 });
