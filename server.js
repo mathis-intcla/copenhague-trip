@@ -3,8 +3,8 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Servir les fichiers statiques depuis le dossier racine
-app.use(express.static('.'));
+// Serve static files from the Next.js export directory
+app.use(express.static(path.join(__dirname, 'out')));
 
 // Gérer les routes SPA (Single Page Application)
 app.get('*', (req, res) => {
@@ -14,7 +14,7 @@ app.get('*', (req, res) => {
   }
   
   // Pour toutes les autres routes, servir index.html
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'out', 'index.html'));
 });
 
 app.listen(port, () => {
