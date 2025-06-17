@@ -36,3 +36,20 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Production build
+
+To generate the static site and serve it locally:
+
+```bash
+# install dependencies if needed
+npm install
+
+# build and export the site to the `out` directory
+npm run build
+
+# serve the exported files
+node server.js
+```
+
+`node server.js` simply serves the files from the `out` folder using Express. You can also use `npx serve out` or any other static file server.
