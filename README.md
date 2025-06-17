@@ -31,8 +31,12 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy on Infomaniak
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To deploy the pre-built application on [Infomaniak](https://www.infomaniak.com/):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Install the dependencies with `npm install`.
+2. Build the static site with `npm run build`. The generated files will be placed in the `out` directory.
+3. Start the Express server with `npm start`.
+
+The server serves the files from the `out` folder and will be ready on the configured port (default `3000`).
