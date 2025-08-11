@@ -37,21 +37,21 @@ export default function TodoContent() {
   return (
     <div className="relative w-full min-h-[60vh] flex flex-col items-center justify-center">
       {/* Fond illustré */}
-      <div className="absolute inset-0 w-full h-[320px] md:h-[400px] overflow-hidden rounded-3xl shadow-apple">
+      <div className="absolute inset-0 w-full h-[320px] md:h-[400px] overflow-hidden rounded-3xl">
         <img
           src="/todo-copenhagen.jpg"
           alt="Todo Copenhague"
           className="w-full h-full object-cover object-center scale-105"
           style={{ filter: 'brightness(0.85) blur(2px)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/30 to-transparent dark:from-gray-900/80 dark:via-gray-900/30 dark:to-transparent backdrop-blur-xl rounded-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/30 to-transparent dark:from-gray-900/80 dark:via-gray-900/30 dark:to-transparent rounded-3xl" />
       </div>
       <div className="relative z-10 w-full max-w-2xl mx-auto pt-16 pb-8 animate-fade-in">
         <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-8 text-center drop-shadow-lg">
           To-do List Collaborative
         </h1>
         {/* Formulaire d'ajout */}
-        <div className="glass dark:glass-dark rounded-3xl shadow-apple p-6 mb-8">
+        <div className="card rounded-2xl p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Nouvelle Tâche</h2>
           <form className="space-y-4" onSubmit={handleAdd}>
             <div>
@@ -94,7 +94,7 @@ export default function TodoContent() {
             <div className="text-center text-gray-500 dark:text-gray-400">Aucune tâche pour le moment.</div>
           )}
           {todos.map(todo => (
-            <div key={todo.id} className={`glass dark:glass-dark rounded-3xl shadow-apple p-5 flex items-center justify-between gap-4 animate-fade-in ${todo.done ? 'opacity-60' : ''}`}>
+            <div key={todo.id} className={`card rounded-2xl p-5 flex items-center justify-between gap-4 animate-fade-in ${todo.done ? 'opacity-60' : ''}`}>
               <div className="flex items-center gap-3 flex-1">
                 <input
                   type="checkbox"

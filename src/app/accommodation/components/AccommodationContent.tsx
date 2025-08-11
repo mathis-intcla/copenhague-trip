@@ -57,21 +57,21 @@ export default function AccommodationContent() {
   return (
     <div className="relative w-full min-h-[60vh] flex flex-col items-center justify-center">
       {/* Fond illustré */}
-      <div className="absolute inset-0 w-full h-[320px] md:h-[400px] overflow-hidden rounded-3xl shadow-apple">
+      <div className="absolute inset-0 w-full h-[320px] md:h-[400px] overflow-hidden rounded-3xl">
         <img
           src="/accommodation-copenhagen.jpg"
           alt="Logement Copenhague"
           className="w-full h-full object-cover object-center scale-105"
           style={{ filter: 'brightness(0.85) blur(2px)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/30 to-transparent dark:from-gray-900/80 dark:via-gray-900/30 dark:to-transparent backdrop-blur-xl rounded-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/30 to-transparent dark:from-gray-900/80 dark:via-gray-900/30 dark:to-transparent rounded-3xl" />
       </div>
       <div className="relative z-10 w-full max-w-2xl mx-auto pt-16 pb-8 animate-fade-in">
         <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-8 text-center drop-shadow-lg">
           Logements Proposés
         </h1>
         {/* Formulaire d'ajout */}
-        <div className="glass dark:glass-dark rounded-3xl shadow-apple p-6 mb-8">
+        <div className="card rounded-2xl p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Ajouter un Logement</h2>
           <form className="space-y-4" onSubmit={handleAdd}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -154,7 +154,7 @@ export default function AccommodationContent() {
         {/* Liste des logements */}
         <div className="space-y-6">
           {logements.map((logement) => (
-            <div key={logement.id} className="glass dark:glass-dark rounded-3xl shadow-apple p-6 flex flex-col md:flex-row gap-6 animate-fade-in">
+            <div key={logement.id} className="card rounded-2xl p-6 flex flex-col md:flex-row gap-6 animate-fade-in">
               <div className="w-full md:w-1/3 flex-shrink-0">
                 <img
                   src={logement.image}

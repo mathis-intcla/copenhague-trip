@@ -19,7 +19,7 @@ export default function TipsContent() {
         </div>
 
         {/* Formulaire d'ajout de conseil */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+        <div className="card rounded-2xl p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
             Partager un Conseil
           </h2>
@@ -65,7 +65,7 @@ export default function TipsContent() {
         {/* Liste des conseils */}
         <div className="space-y-4">
           {/* Monnaie */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <div className="card rounded-2xl p-6">
             <div className="flex items-start">
               <InformationCircleIcon className="h-6 w-6 text-blue-500 mt-1 mr-3" />
               <div>
@@ -83,7 +83,7 @@ export default function TipsContent() {
           </div>
 
           {/* Transport */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <div className="card rounded-2xl p-6">
             <div className="flex items-start">
               <InformationCircleIcon className="h-6 w-6 text-green-500 mt-1 mr-3" />
               <div>
@@ -101,7 +101,7 @@ export default function TipsContent() {
           </div>
 
           {/* Météo */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <div className="card rounded-2xl p-6">
             <div className="flex items-start">
               <InformationCircleIcon className="h-6 w-6 text-yellow-500 mt-1 mr-3" />
               <div>
@@ -119,7 +119,7 @@ export default function TipsContent() {
           </div>
 
           {/* Langue */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+          <div className="card rounded-2xl p-6">
             <div className="flex items-start">
               <InformationCircleIcon className="h-6 w-6 text-purple-500 mt-1 mr-3" />
               <div>

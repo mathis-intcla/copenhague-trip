@@ -3,28 +3,41 @@
 @tailwind utilities;
 @import url('leaflet/dist/leaflet.css');
 
+/* Design tokens */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --bg: #f8fafc;            /* slate-50 */
+  --fg: #0b1220;            /* neutral 950-ish */
+  --surface: #ffffffcc;     /* light translucent */
+  --surface-solid: #ffffff; /* solid surface */
+  --border: #e5e7eb;        /* gray-200 */
+  --muted: #6b7280;         /* gray-500 */
+  --primary: #2563eb;       /* blue-600 */
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.dark {
+  --bg: #0b1220;            /* near slate-950 */
+  --fg: #e5e7eb;            /* gray-200 */
+  --surface: #0f172acc;     /* slate-900 translucent */
+  --surface-solid: #0f172a; /* slate-900 */
+  --border: #1f2937;        /* gray-800 */
+  --muted: #9ca3af;         /* gray-400 */
+  --primary: #60a5fa;       /* blue-400 */
+  --primary-600: #3b82f6;   /* blue-500 */
+  --primary-700: #2563eb;   /* blue-600 */
+}
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgb(var(--background-end-rgb))
-  )
-  rgb(var(--background-start-rgb));
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 30%, transparent);
+  }
+  h1, h2, h3 { letter-spacing: -0.02em; }
 }
 
 @keyframes fadeIn {
@@ -43,22 +56,27 @@ body {
 }
 
 /* Glassmorphism & Apple/iOS inspired styles */
-.glass {
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-radius: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.glass-dark {
-  background: rgba(24, 28, 32, 0.6);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-radius: 2rem;
-  border: 1px solid rgba(24, 28, 32, 0.3);
+@layer components {
+  .card {
+    @apply rounded-2xl border transition-colors; 
+    background: var(--surface);
+    border-color: var(--border);
+    box-shadow: 0 8px 20px 0 color-mix(in oklab, #000 8%, transparent);
+  }
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold transition-colors;
+  }
+  .btn-primary {
+    background: var(--primary-600);
+    color: white;
+  }
+  .btn-primary:hover { background: var(--primary-700); }
+  .pill {
+    @apply px-3 py-1 rounded-full text-xs font-medium;
+    background: color-mix(in oklab, var(--fg) 6%, transparent);
+    color: var(--fg);
+    box-shadow: 0 2px 8px color-mix(in oklab, #000 6%, transparent);
+  }
 }
 
 /* Arrondis Apple Vision/TV */

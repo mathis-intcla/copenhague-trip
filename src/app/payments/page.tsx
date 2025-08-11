@@ -19,14 +19,14 @@ export default function Payments() {
   return (
     <div className="relative w-full min-h-[60vh] flex flex-col items-center justify-center">
       {/* Fond illustré */}
-      <div className="absolute inset-0 w-full h-[320px] md:h-[400px] overflow-hidden rounded-3xl shadow-apple">
+      <div className="absolute inset-0 w-full h-[320px] md:h-[400px] overflow-hidden rounded-3xl">
         <img
           src="/accommodation-copenhagen.jpg"
           alt="Paiements Copenhague"
           className="w-full h-full object-cover object-center scale-105"
           style={{ filter: 'brightness(0.85) blur(2px)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/30 to-transparent dark:from-gray-900/80 dark:via-gray-900/30 dark:to-transparent backdrop-blur-xl rounded-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/30 to-transparent dark:from-gray-900/80 dark:via-gray-900/30 dark:to-transparent rounded-3xl" />
       </div>
       <div className="relative z-10 w-full max-w-2xl mx-auto pt-16 pb-8 animate-fade-in">
         <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-8 text-center drop-shadow-lg">
@@ -34,7 +34,7 @@ export default function Payments() {
         </h1>
         <div className="space-y-6">
           {people.map((person, pIdx) => (
-            <div key={person} className="glass dark:glass-dark rounded-3xl shadow-apple p-6 flex flex-col gap-4 animate-fade-in">
+            <div key={person} className="card rounded-2xl p-6 flex flex-col gap-4 animate-fade-in">
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-lg font-semibold text-gray-900 dark:text-white drop-shadow">{person}</span>
               </div>

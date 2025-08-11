@@ -86,7 +86,7 @@ export default function DiscoveriesContent({ compact = false }: { compact?: bool
 
         {/* Masonry type Pinterest */}
         <div
-          className="[column-count:1] sm:[column-count:2] lg:[column-count:3] [column-gap:1rem]"
+          className="[column-count:1] sm:[column-count:2] lg:[column-count:3] [column-gap:0.75rem]"
           role="list"
           aria-label="Découvertes en grille masonry"
         >
@@ -94,7 +94,7 @@ export default function DiscoveriesContent({ compact = false }: { compact?: bool
             <article
               key={d.id}
               role="listitem"
-              className="mb-4 break-inside-avoid rounded-3xl overflow-hidden shadow-apple bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl"
+              className="mb-3 break-inside-avoid rounded-2xl overflow-hidden card"
             >
               <a href={d.link} target="_blank" rel="noopener noreferrer" className="block group">
                 {/* Utiliser img (images statiques publiques) pour éviter config Next/Image pendant export */}
