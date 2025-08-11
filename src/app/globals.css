@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('leaflet/dist/leaflet.css');
+/* Leaflet CSS importé directement dans les fichiers qui en ont besoin (ex: map/page.tsx) */
 
 /* Design tokens */
 :root {
