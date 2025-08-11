@@ -33,7 +33,7 @@ export default function HomeContent() {
         </div>
       </div>
       {/* Cartes d'accès rapide */}
-      <div className="relative z-10 w-full max-w-3xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-[-60px] px-2">
+      <div className="relative z-10 w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-[-60px] px-2">
         <QuickLink href="/flights" title="Vols" desc="Gérez vos horaires et billets d'avion" />
         <QuickLink href="/accommodation" title="Logements" desc="Proposez et votez pour vos hébergements préférés" />
         <QuickLink href="/discoveries" title="Découvertes" desc="Partagez vos inspirations et découvertes" />

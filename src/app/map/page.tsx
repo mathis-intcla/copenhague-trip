@@ -32,7 +32,7 @@ export default function MapPage() {
       {/* Fond illustré */}
       <div className="absolute inset-0 w-full h-[320px] md:h-[400px] overflow-hidden rounded-3xl shadow-apple">
         <img
-          src="/map-copenhagen.jpg"
+          src="/hero-copenhagen.jpg"
           alt="Carte Copenhague"
           className="w-full h-full object-cover object-center scale-105"
           style={{ filter: 'brightness(0.85) blur(2px)' }}

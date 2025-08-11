@@ -21,7 +21,7 @@ export default function Payments() {
       {/* Fond illustré */}
       <div className="absolute inset-0 w-full h-[320px] md:h-[400px] overflow-hidden rounded-3xl shadow-apple">
         <img
-          src="/payments-copenhagen.jpg"
+          src="/accommodation-copenhagen.jpg"
           alt="Paiements Copenhague"
           className="w-full h-full object-cover object-center scale-105"
           style={{ filter: 'brightness(0.85) blur(2px)' }}

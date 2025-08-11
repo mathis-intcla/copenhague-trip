@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { href: "/flights", label: "Vols" },
@@ -18,10 +19,13 @@ const navLinks = [
 export default function Header() {
   return (
     <header className="sticky top-0 z-30 w-full px-0 pt-4 pb-2 bg-white/60 dark:bg-gray-900/60 backdrop-blur-xl shadow-lg rounded-b-3xl">
-      <div className="max-w-3xl mx-auto flex flex-col items-center">
-        <Link href="/" className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-2 drop-shadow-lg">
+      <div className="max-w-5xl mx-auto flex flex-col items-center px-3">
+        <div className="w-full flex items-center justify-between">
+          <Link href="/" className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-2 drop-shadow-lg">
           Copenhague 2025
-        </Link>
+          </Link>
+          <ThemeToggle />
+        </div>
         <nav className="flex flex-wrap justify-center gap-2 md:gap-4">
           {navLinks.map((link) => (
             <Link
